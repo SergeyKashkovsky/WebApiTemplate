@@ -1,7 +1,6 @@
-﻿using NLog;
+﻿using Microsoft.Extensions.Hosting.WindowsServices;
+using NLog;
 using NLog.Web;
-using System;
-using WebApiTemplate;
 using WebApiTemplate.Core;
 using WebApiTemplate.Core.Services;
 
@@ -10,7 +9,13 @@ logger.Debug("init main");
 
 try
 {
-    var builder = WebApplication.CreateBuilder(args);
+    var options = new WebApplicationOptions
+    {
+        Args = args,
+        ContentRootPath = WindowsServiceHelpers.IsWindowsService()
+            ? AppContext.BaseDirectory : default
+    };
+    var builder = WebApplication.CreateBuilder(options);
 
     // Add services to the container.
     // Установка службы уровня ядра для внедрения зависимости
