@@ -42,7 +42,7 @@ try
     );
 
     builder.Services.AddCors(options => options.AddPolicy("AllowSome", builder => builder
-        .WithOrigins(settings.AllowedOrigins.ToArray())
+        .WithOrigins(settings.AllowedOrigins)
         .AllowAnyHeader()
         .AllowAnyMethod()
         .AllowCredentials())
